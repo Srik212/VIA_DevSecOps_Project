@@ -24,4 +24,4 @@ jobs:
           GITLAB_REPO: ${{ secrets.GITLAB_REPO }}
         run: |
          git remote add gitlab https://oauth2:${GITLAB_TOKEN}@gitlab.com/sriyan02/VIA_DevSecOps_Project.git
-         git push --force gitlab main
+         git push gitlab main
