@@ -15,8 +15,8 @@ jobs:
 
       - name: Setup Git
         run: |
-          git config --global user.name "GitHub Mirror Bot"
-          git config --global user.email "mirror-bot@example.com"
+          git config --global user.name "Srik212"
+          git config --global user.email "srik120299@gmail.com"
 
       - name: Add GitLab remote
         env:
