@@ -1,4 +1,4 @@
-# VIA-Project-
+# VIA(Vulnerable Inventory Management App)-Project-DevSecOps
 This project implements a robust DevSecOps pipeline for a Python Flask-based web application, integrating modern security tools and CI/CD best practices. The main goal is to automate security scanning at every phase of the development lifecycle — ensuring code quality, infrastructure compliance, and container image safety — all before deployment.
 
 
@@ -6,9 +6,9 @@ Here’s a well-rounded **project description** for your DevSecOps pipeline proj
 
 ---
 
-## 🔐 DevSecOps Pipeline for a Python Flask Application
+## DevSecOps Pipeline for a Python Flask Application
 
-### 📌 **Project Description**
+**Project Description**
 
 This project implements a robust **DevSecOps pipeline** for a Python Flask-based web application, integrating modern security tools and CI/CD best practices. The main goal is to automate security scanning at every phase of the development lifecycle — ensuring code quality, infrastructure compliance, and container image safety — all before deployment.
 
@@ -16,7 +16,7 @@ The project uses **GitLab CI/CD** as the orchestration engine while leveraging c
 
 ---
 
-### 🛠️ **Tech Stack & Tools**
+**Tech Stack & Tools**
 
 | Category                    | Tools Used                     |
 | --------------------------- | ------------------------------ |
@@ -26,12 +26,11 @@ The project uses **GitLab CI/CD** as the orchestration engine while leveraging c
 | Static Code Analysis (SAST) | SonarCloud                     |
 | Dependency Scanning (SCA)   | Snyk                           |
 | Container Security          | Trivy                          |
-| Infrastructure as Code Scan | Checkov (Terraform/Dockerfile) |
 | Containerization            | Docker                         |
 
 ---
 
-### 🧰 **Key Features**
+**Key Features**
 
 * **Automated CI/CD pipeline** using GitLab CI
 * **Static Application Security Testing** via SonarCloud
@@ -44,18 +43,17 @@ The project uses **GitLab CI/CD** as the orchestration engine while leveraging c
 
 ---
 
-### 🚀 **Pipeline Workflow Overview**
+**Pipeline Workflow Overview**
 
 1. **Build** the Flask application and set up environment
 2. **Run SAST** with SonarCloud to detect insecure coding patterns
 3. **Run SCA** using Snyk to detect vulnerable dependencies
 4. **Container Scan** using Trivy to scan the built Docker image
-5. **IaC Scan** with Checkov to validate Terraform and Docker security
-6. **Publish reports** (optional) to dashboards or notify via email/slack
+5. **Publish reports** (optional) to dashboards or notify via email/slack
 
 ---
 
-### 🎯 **Objective**
+**Objective**
 
 To integrate security at every stage of the software delivery pipeline — ensuring early detection of vulnerabilities, reducing remediation time, and establishing a security-first development culture.
 
