@@ -1,0 +1,80 @@
+stages:
+  -docker_build
+  -SAST
+  -SCA
+  -Container_scan
+
+variables:
+  IMAGE_NAME: srik1202/flask-app:latest
+  SONAR_SCANNER_OPTS: "-Dsonar.login=$Sonar_Token"
+
+
+#Sets defaults for all jobs unless overridden.
+
+#Uses Docker-in-Docker (dind) to allow container builds inside GitLab runners.
+
+#Sets up the Docker daemon so that jobs can docker build and docker push.
+
+default:
+  image: docker:24.0.7
+  services:
+    - docker:24.0.7-dind
+  variables:
+    DOCKER_TLS_CERTDIR: ""
+    DOCKER_HOST: tcp://docker:2375
+
+
+
+docker_build_and_push:
+  stage: docker_build
+  script:
+    - echo "Logging in to Docker Hub"
+    - echo "$Docker_Token" | docker login -u "$Docker_User" --password-stdin
+    - echo "Building Docker Image"
+    - docker build -t $IMAGE_NAME .
+    - docker push $IMAGE_NAME
+  only:
+    - main #ensures this runs only on pushes to the main branch.
+
+
+sonarcloud_scan:
+  stage: sast
+  image: sonarsource/sonar-scanner-cli:latest
+  script:
+    - echo "Running Sonarcloud Scan"
+    - sonar-scanner
+  only:
+    - main
+  allow_failure: true
+
+  snyk_sca_scan:
+  stage: sca
+  image: snyk/snyk:alpine
+  script:
+    - echo "Installing Python dependencies"
+    - pip install --upgrade pip
+    - pip install -r app/requirements.txt
+    - echo "Authenticating with Snyk"
+    - snyk auth $SNYK_TOKEN
+    - echo "Scanning Python dependencies"
+    - snyk test --file=app/requirements.txt || true
+  only:
+    - main
+  allow_failure: true
+
+
+  trivy_image_scan:
+  stage: container_scan
+  image: alpine:3.18
+  before_script:
+    - apk add --no-cache curl docker
+    - curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin
+  script:
+    - echo "📥 Pulling image for scan: $IMAGE_NAME"
+    - docker pull $IMAGE_NAME
+    - echo "🔎 Scanning image with Trivy"
+    - trivy image $IMAGE_NAME || true
+  only:
+    - main
+  allow_failure: true
+
